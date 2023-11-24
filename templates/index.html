@@ -15,7 +15,7 @@
 <body class="bg-gray-900 text-gray-100">
     <main class="mx-auto mt-16 max-w-lg">
         <h1 class="text-5xl font-heading font-semibold">Goschulte</h1>
-        <h2 class="text-2xl font-heading">Schulte tables for reading practice</h2>
+        <h2 class="text-3xl font-heading">Schulte tables for reading practice</h2>
         <section class="my-8">
             <p>
                 Schulte tables are a type of visual search exercise that can help to improve your reading speed,
@@ -24,7 +24,27 @@
                 moving down and to the right, as quickly as possible.
             </p>
         </section>
+        <section class="my-8">
+            <h3 class="text-2xl font-heading mb-3">Choose a table size</h3>
+            <form class="w-full">
+                <select size="4" class="w-full bg-gray-700 rounded">
+                    <option value="3" class="h-10 flex items-center justify-center">3x3</option>
+                    <option value="4" class="h-10 flex items-center justify-center">4x4</option>
+                    <option value="5" class="h-10 flex items-center justify-center">5x5</option>
+                    <option value="6" class="h-10 flex items-center justify-center">6x6</option>
+                </select>
+
+                <button type="submit" class="w-full my-2 py-1 rounded bg-gray-100 text-gray-900">
+                    Generate Table
+                </button>
+            </form>
+        </section>
+        <p>
+            Brought to you by
+            <a href="https://github.com/wipdev-tech" class="text-blue-400 hover:text-blue-300">wipdev</a>
+        </p>
     </main>
 </body>
+
 
 </html>
