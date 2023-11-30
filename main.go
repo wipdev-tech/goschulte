@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"log"
+	"math/rand"
 	"net/http"
 	"strconv"
 )
@@ -18,11 +19,15 @@ func main() {
 	log.Fatal(http.ListenAndServe("localhost:8080", nil))
 }
 
+// handleHome is the handler for the home route ("/")
 func handleHome(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
 		tmpl := template.Must(template.ParseFiles("templates/index.html"))
-		tmpl.Execute(w, nil)
+		err := tmpl.Execute(w, nil)
+		if err != nil {
+			log.Fatal(err)
+		}
 
 	case "POST":
 		size := r.FormValue("table-size")
@@ -33,14 +38,40 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// handleTable is the handler for the table route ("/table"). The URL must
+// include a query parameter "size" with a number to generate the table with
+// the specified size. Otherwise, the handler will trigger a redirection back
+// to the home route.
 func handleTable(w http.ResponseWriter, r *http.Request) {
-    sizeQueryParam := r.URL.Query().Get("size")
-    size, err := strconv.Atoi(sizeQueryParam)
-    if err != nil {
+	sizeQueryParam := r.URL.Query().Get("size")
+	size, err := strconv.Atoi(sizeQueryParam)
+	if err != nil {
 		http.Redirect(w, r, "/", http.StatusFound)
-    }
-    fmt.Println(size)
+		return
+	}
+
+	nums := generateNums(size)
 
 	tmpl := template.Must(template.ParseFiles("templates/table.html"))
-	tmpl.Execute(w, nil)
+	err = tmpl.Execute(w, nums)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+// generateNums takes a table size (int) and generates a random sequence of
+// numebrs necessary to generate the Schulte table
+func generateNums(size int) []int {
+	var nums []int
+
+	for i := 1; i <= size*size; i++ {
+		nums = append(nums, i)
+	}
+
+	for i := range nums {
+		j := rand.Intn(size * size)
+		nums[i], nums[j] = nums[j], nums[i]
+	}
+
+	return nums
 }
