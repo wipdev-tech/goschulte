@@ -21,20 +21,10 @@ func main() {
 
 // handleHome is the handler for the home route ("/")
 func handleHome(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case "GET":
-		tmpl := template.Must(template.ParseFiles("templates/index.html"))
-		err := tmpl.Execute(w, nil)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-	case "POST":
-		size := r.FormValue("table-size")
-		http.Redirect(w, r, "/table?size="+size, http.StatusFound)
-
-	default:
-		w.WriteHeader(http.StatusMethodNotAllowed)
+	tmpl := template.Must(template.ParseFiles("templates/index.html"))
+	err := tmpl.Execute(w, nil)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
 
