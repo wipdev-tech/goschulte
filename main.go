@@ -21,7 +21,7 @@ func main() {
 
     godotenv.Load()
     if (os.Getenv("ENV") == "dev") {
-        fmt.Println("Server started and running at http://localhost:8080")
+        fmt.Println("Dev server started and running at http://localhost:8080")
         log.Fatal(http.ListenAndServe("localhost:8080", nil))
     } else {
         fmt.Println("Server started and running")

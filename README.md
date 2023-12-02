@@ -17,3 +17,12 @@ To use this project locally, you need to have **Go** installed. The project
 also uses **TailwindCSS**, but you don't need to have it installed if you don't
 intend to modify the CSS - the built CSS is already included in the source
 code.
+
+After cloning the repo, use a copy of the .env.example file:
+
+```bash
+cp .env.example .env
+```
+
+It has an environment variable, `ENV=dev`, that the code needs to spin up the
+local development server.
