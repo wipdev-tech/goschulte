@@ -7,7 +7,10 @@ import (
 	"math"
 	"math/rand"
 	"net/http"
+	"os"
 	"strconv"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -16,8 +19,14 @@ func main() {
 	http.HandleFunc("/", handleHome)
 	http.HandleFunc("/table", handleTable)
 
-	fmt.Println("Server started and running at http://localhost:8080")
-	log.Fatal(http.ListenAndServe("localhost:8080", nil))
+    godotenv.Load()
+    if (os.Getenv("ENV") == "dev") {
+        fmt.Println("Server started and running at http://localhost:8080")
+        log.Fatal(http.ListenAndServe("localhost:8080", nil))
+    } else {
+        fmt.Println("Server started and running")
+        log.Fatal(http.ListenAndServe("0.0.0.0:"+os.Getenv("PORT"), nil))
+    }
 }
 
 // handleHome is the handler for the home route ("/")
