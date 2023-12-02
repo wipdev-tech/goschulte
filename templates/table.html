@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <title></title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/static/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Rubik&display=swap"
-        rel="stylesheet">
-</head>
+{{ template "head" }}
 
-<body class="bg-gray-900 text-gray-100">
+<body class="bg-gray-100 text-gray-900">
     <main class="mx-auto my-20 max-w-lg px-5">
-        <h2 class="text-3xl font-heading">Schulte tables of size {{ . }}</h2>
         <section class="my-8">
-            <form class="w-full" method="post">
-                <button type="submit" class="w-full my-2 py-1 rounded bg-gray-100 text-gray-900">
-                    Generate Table
-                </button>
-            </form>
+            <div class="grid px-5">
+                {{ range . }}
+                <div class="aspect-square border border-gray-500 flex items-center justify-center text-3xl">
+                    {{ . }}
+                </div>
+                {{ end }}
+            </div>
         </section>
-        <p>
-            Brought to you by
-            <a href="https://github.com/wipdev-tech" class="text-blue-400 hover:text-blue-300">wipdev</a>
-        </p>
+        <section class="my-8">
+            <div class="w-full flex flex-col">
+                <button onclick="location.reload();"
+                    class="w-full my-2 py-1 rounded bg-gray-900 text-gray-100 text-center">
+                    Generate Another Table
+                </button>
+                <a href="/" class="w-full my-2 py-1 rounded bg-gray-900 text-gray-100 text-center">Back to Homepage</a>
+            </div>
+        </section>
+        {{ template "footer" }}
     </main>
 </body>
+
+<style>
+    .grid {
+        grid-template-columns: repeat({{ size . }} , 1fr);
+    }
+</style>
 
 
 </html>

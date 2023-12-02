@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"log"
+	"math"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -21,7 +22,7 @@ func main() {
 
 // handleHome is the handler for the home route ("/")
 func handleHome(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("templates/index.html"))
+	tmpl := template.Must(template.ParseFiles("templates/index.html", "templates/fragments.html"))
 	err := tmpl.Execute(w, nil)
 	if err != nil {
 		log.Fatal(err)
@@ -42,7 +43,16 @@ func handleTable(w http.ResponseWriter, r *http.Request) {
 
 	nums := generateNums(size)
 
-	tmpl := template.Must(template.ParseFiles("templates/table.html"))
+	tmpl, err := template.New("table.html").Funcs(
+		template.FuncMap{"size": func(s []int) int {
+			return int(math.Sqrt(float64(len(s))))
+		}},
+	).ParseFiles("templates/table.html", "templates/fragments.html")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	err = tmpl.Execute(w, nums)
 	if err != nil {
 		log.Fatal(err)
