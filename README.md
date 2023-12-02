@@ -1,14 +1,15 @@
-# Goschulte (work in progress)
+# Goschulte
 
 **Schulte tables using Go and TailwindCSS**
 
 Schulte tables are a type of visual search exercise that can help to improve
 your reading speed, attention, and peripheral vision. They consist of a grid of
-numbers or letters that are arranged in random order. The goal is to find each
-number or letter in the grid, starting from the top left and moving down and to
-the right, as quickly as possible.
+numbers that are arranged in random order. The goal is to find all the numbers
+in the grid, as quickly as possible, while focusing on the center of the table.
 
-You can start playing and practicing here: [link to be added after deployment]
+You can start playing and practicing here: <https://goschulte.onrender.com>
+(Render.com shuts down deployments on the free tier so first load might take
+some time.)
 
 ## Local Development
 
