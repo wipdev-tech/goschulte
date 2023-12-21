@@ -44,9 +44,16 @@
                     <option value="6" class="h-10 flex items-center justify-center">6x6</option>
                 </select>
 
-                <button type="submit" class="w-full my-2 py-1 rounded bg-gray-900 text-gray-100">
-                    Generate Table
-                </button>
+                <div class="flex gap-3 items-center justify-around">
+                    <label for="timer" class="w-36">
+                        <input type="checkbox" id="timer" name="timer" value="y">
+                        Show timer
+                    </label>
+
+                    <button type="submit" class="w-full my-2 py-1 rounded bg-gray-900 text-gray-100">
+                        Generate Table
+                    </button>
+                </div>
             </form>
         </section>
         {{ template "footer" }}

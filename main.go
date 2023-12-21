@@ -19,14 +19,18 @@ func main() {
 	http.HandleFunc("/", handleHome)
 	http.HandleFunc("/table", handleTable)
 
-    godotenv.Load()
-    if (os.Getenv("ENV") == "dev") {
-        fmt.Println("Dev server started and running at http://localhost:8080")
-        log.Fatal(http.ListenAndServe("localhost:8080", nil))
-    } else {
-        fmt.Println("Server started and running")
-        log.Fatal(http.ListenAndServe("0.0.0.0:"+os.Getenv("PORT"), nil))
-    }
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if os.Getenv("ENV") == "dev" {
+		fmt.Println("Dev server started and running at http://localhost:8080")
+		log.Fatal(http.ListenAndServe("localhost:8080", nil))
+	} else {
+		fmt.Println("Server started and running")
+		log.Fatal(http.ListenAndServe("0.0.0.0:"+os.Getenv("PORT"), nil))
+	}
 }
 
 // handleHome is the handler for the home route ("/")
@@ -43,14 +47,17 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 // the specified size. Otherwise, the handler will trigger a redirection back
 // to the home route.
 func handleTable(w http.ResponseWriter, r *http.Request) {
-	sizeQueryParam := r.URL.Query().Get("size")
-	size, err := strconv.Atoi(sizeQueryParam)
+	sizeParam := r.URL.Query().Get("size")
+	size, err := strconv.Atoi(sizeParam)
 	if err != nil {
 		http.Redirect(w, r, "/", http.StatusFound)
 		return
 	}
 
 	nums := generateNums(size)
+
+	showTimerParam := r.URL.Query().Get("timer")
+	showTimer := showTimerParam == "y"
 
 	tmpl, err := template.New("table.html").Funcs(
 		template.FuncMap{"size": func(s []int) int {
@@ -62,7 +69,13 @@ func handleTable(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	err = tmpl.Execute(w, nums)
+	tmplData := struct {
+		Nums      []int
+		ShowTimer bool
+	}{nums, showTimer}
+
+	err = tmpl.Execute(w, tmplData)
+
 	if err != nil {
 		log.Fatal(err)
 	}
