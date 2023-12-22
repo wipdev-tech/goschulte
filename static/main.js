@@ -11,14 +11,30 @@ function formatTime(secs) {
     return `${minutes} : ${sencondsPadded}`
 }
 
+
 /**
- * The number of seconds to format.
- * @type {number}
+ * Total number of seconds elapsed.
  */
 let secs = 0
 
-setInterval(() => {
+
+/**
+ * The timer HTML element, or `null` if it doesn't exist.
+ */
+const timerElement = document.getElementById("timer");
+
+
+/**
+ * The interval that updates elapsed seconds, and timer element if exists.
+ */
+const intv = setInterval(() => {
     secs++
-    document.getElementById("timer").textContent = formatTime(secs)
+    if (timerElement) {
+        timerElement.textContent = formatTime(secs)
+    }
 }, 1000);
 
+
+document.getElementById("done").addEventListener("click", () => {
+    clearInterval(intv)
+})

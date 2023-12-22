@@ -18,12 +18,17 @@
         <p id="timer" class="w-full text-center text-gray-400 text-3xl font-light">0 : 00</p>
         {{ end }}
         <section class="my-8">
-            <div class="w-full flex flex-col">
+            <button id="done" type="button" class="w-full my-2 py-1 rounded bg-emerald-600 text-gray-100 text-center">
+                Done
+            </button>
+            <div class="w-full flex gap-2">
                 <button onclick="location.reload();"
                     class="w-full my-2 py-1 rounded bg-gray-900 text-gray-100 text-center">
                     Generate Another Table
                 </button>
-                <a href="/" class="w-full my-2 py-1 rounded bg-gray-900 text-gray-100 text-center">Back to Homepage</a>
+                <a href="/" class="w-full my-2 py-1 rounded bg-gray-900 text-gray-100 text-center">
+                    Back to Homepage
+                </a>
             </div>
         </section>
         {{ template "footer" }}
