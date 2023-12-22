@@ -15,7 +15,7 @@
             </div>
         </section>
         {{ if .ShowTimer }}
-        <p class="w-full text-center">This is a timer</p>
+        <p id="timer" class="w-full text-center text-gray-400 text-3xl font-light">0 : 00</p>
         {{ end }}
         <section class="my-8">
             <div class="w-full flex flex-col">
@@ -28,6 +28,8 @@
         </section>
         {{ template "footer" }}
     </main>
+
+    <script src="static/main.js"></script>
 </body>
 
 </html>
