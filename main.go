@@ -18,10 +18,7 @@ func main() {
 	http.HandleFunc("/", handleHome)
 	http.HandleFunc("/table", handleTable)
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
+    loadEnv()
 
 	if os.Getenv("ENV") == "dev" {
 		fmt.Println("Dev server started and running at http://localhost:8080")
@@ -96,4 +93,12 @@ func generateNums(size int) []int {
 	}
 
 	return nums
+}
+
+// loadEnv simply loads .env file if it exists
+func loadEnv() {
+	err := godotenv.Load()
+	if err != nil {
+		return
+	}
 }
