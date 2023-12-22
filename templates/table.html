@@ -6,7 +6,10 @@
 <body class="bg-gray-100 text-gray-900">
     <main class="mx-auto mt-20 max-w-lg px-5">
         <section class="my-8">
-            <div class="grid px-5" style="grid-template-columns: repeat({{ size .Nums }}, 1fr)">
+            <div
+                class="grid px-5"
+                style="grid-template-columns: repeat(calc(sqrt({{ len .Nums }})), 1fr)"
+            >
                 {{ range .Nums }}
                 <div class="aspect-square border border-gray-500 flex items-center justify-center text-3xl">
                     {{ . }}

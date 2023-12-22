@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"html/template"
 	"log"
-	"math"
 	"math/rand"
 	"net/http"
 	"os"
@@ -59,9 +58,12 @@ func handleTable(w http.ResponseWriter, r *http.Request) {
 	showTimerParam := r.URL.Query().Get("timer")
 	showTimer := showTimerParam == "y"
 
-	tmpl, err := template.New("table.html").Funcs(
-		template.FuncMap{"size": calcSize},
-	).ParseFiles("templates/table.html", "templates/fragments.html")
+	tmpl := template.Must(
+		template.ParseFiles(
+			"templates/table.html",
+			"templates/fragments.html",
+		),
+	)
 
 	if err != nil {
 		log.Fatal(err)
@@ -94,10 +96,4 @@ func generateNums(size int) []int {
 	}
 
 	return nums
-}
-
-// calcSize is a utility to be used in the table template. It takes an int
-// slice and returns the square root of its length.
-func calcSize(s []int) int {
-	return int(math.Sqrt(float64(len(s))))
 }
