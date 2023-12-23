@@ -44,6 +44,11 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 // to the home route.
 func handleTable(w http.ResponseWriter, r *http.Request) {
 	sizeParam := r.URL.Query().Get("size")
+	if sizeParam == "" {
+		renderError(w, http.StatusBadRequest, "Query parameter `size` must be provided. It takes an integer between 3 and 6.")
+		return
+	}
+
 	size, err := strconv.Atoi(sizeParam)
 
 	if err != nil || size < 3 || size > 6 {
