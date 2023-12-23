@@ -18,7 +18,7 @@ func main() {
 	http.HandleFunc("/", handleHome)
 	http.HandleFunc("/table", handleTable)
 
-    loadEnv()
+	loadEnv()
 
 	if os.Getenv("ENV") == "dev" {
 		fmt.Println("Dev server started and running at http://localhost:8080")
@@ -45,8 +45,22 @@ func handleHome(w http.ResponseWriter, r *http.Request) {
 func handleTable(w http.ResponseWriter, r *http.Request) {
 	sizeParam := r.URL.Query().Get("size")
 	size, err := strconv.Atoi(sizeParam)
-	if err != nil {
-		http.Redirect(w, r, "/", http.StatusFound)
+
+	if err != nil || size < 3 || size > 6 {
+        errCode := http.StatusBadRequest
+		w.WriteHeader(errCode)
+
+		tmpl := template.Must(
+			template.ParseFiles(
+				"templates/error.html",
+				"templates/fragments.html",
+			),
+		)
+
+		err = tmpl.Execute(w, errCode)
+		if err != nil {
+			log.Fatal(err)
+		}
 		return
 	}
 

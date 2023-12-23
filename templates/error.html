@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{ template "head" }}
+
+<body class="bg-gray-100 text-gray-900">
+    <main class="mx-auto mt-20 max-w-lg px-5">
+        <h1 class="text-4xl">Whoopsie-daisy!</h1>
+        <p class="mt-5 text-lg">
+            You just got yourself a little
+            <span class="text-red-600">{{ . }}</span>
+            error there... Go back to the
+            <a href="/" class="text-blue-600 hover:text-blue-400">homepage</a>
+            and try again.
+        </p>
+    </main>
+</body>
+
+</html>
