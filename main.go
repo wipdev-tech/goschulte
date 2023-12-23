@@ -47,20 +47,7 @@ func handleTable(w http.ResponseWriter, r *http.Request) {
 	size, err := strconv.Atoi(sizeParam)
 
 	if err != nil || size < 3 || size > 6 {
-        errCode := http.StatusBadRequest
-		w.WriteHeader(errCode)
-
-		tmpl := template.Must(
-			template.ParseFiles(
-				"templates/error.html",
-				"templates/fragments.html",
-			),
-		)
-
-		err = tmpl.Execute(w, errCode)
-		if err != nil {
-			log.Fatal(err)
-		}
+		renderError(w, http.StatusBadRequest, "Query parameter `size` must be an integer between 3 and 6.")
 		return
 	}
 
@@ -114,5 +101,30 @@ func loadEnv() {
 	err := godotenv.Load()
 	if err != nil {
 		return
+	}
+}
+
+// renderError renders an error template given a responseWriter, status code
+// (int), and an error
+// message (string)
+func renderError(w http.ResponseWriter, errCode int, message string) {
+	w.WriteHeader(errCode)
+
+	tmpl := template.Must(
+		template.ParseFiles(
+			"templates/error.html",
+			"templates/fragments.html",
+		),
+	)
+
+	tmplData := struct {
+		StatusCode int
+		StatusText string
+		Message    string
+	}{errCode, http.StatusText(errCode), message}
+
+	err := tmpl.Execute(w, tmplData)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
