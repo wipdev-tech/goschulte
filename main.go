@@ -17,6 +17,7 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.HandleFunc("/", handleHome)
 	http.HandleFunc("/table", handleTable)
+	http.HandleFunc("/stats", handleStats)
 
 	loadEnv()
 
@@ -32,6 +33,15 @@ func main() {
 // handleHome is the handler for the home route ("/")
 func handleHome(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("templates/index.html", "templates/fragments.html"))
+	err := tmpl.Execute(w, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+// handleStats is the handler for the stats route ("/stats")
+func handleStats(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("templates/stats.html", "templates/fragments.html"))
 	err := tmpl.Execute(w, nil)
 	if err != nil {
 		log.Fatal(err)
