@@ -1,7 +1,7 @@
 {{ define "head" }}
 
 <head>
-    <title></title>
+    <title>{{ . }}Goschulte</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/static/styles.css">
@@ -10,11 +10,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Rubik:wght@300;400&display=swap"
         rel="stylesheet">
 </head>
+
 {{ end }}
 
+
 {{ define "footer" }}
+
 <footer class="my-5">
     Brought to you by
     <a href="https://github.com/wipdev-tech" class="text-blue-600 hover:text-blue-400" target="_blank">wipdev</a>
 </footer>
+
 {{ end }}
